@@ -4,13 +4,9 @@
 
 Общение сервера и приложения происходит зашифрованными json сообщениями:
 
-# RC4
+# Шифрование
 
-BASE64 utf-8
-
-Key:
-
-SHA256
+RC4 with SHA256 >> BASE64 utf8
 
 **Только такие кавычки в**  **json** **строке считаются валидными! (как в примере далее)**
 
@@ -20,105 +16,109 @@ SHA256
 
 {%22name%22:%22test%22,%22pass%22:%22test%22}
 
-/encode?data={&quot;name&quot;:&quot;test&quot;,&quot;pass&quot;:&quot;test&quot;}
+```javascript
+/encode?data={"name":"test","pass":"test"}
+```
 
 **Ответ**** :**
 
+```javascript
 TCLCgsK7CsOpw4kMHcOuwpEiwo7Cq8KewoHDhFQmBGPCg8KzOsK2fcOjwooE
+```
 
 **Тест**** декодирования**
 
+```javascript
 /decode?data=TCLCgsK7CsOpw4kMHcOuwpEiwo7Cq8KewoHDhFQmBGPCg8KzOsK2fcOjwooE
+```
 
 **Ответ**** :**
 
-{&quot;name&quot;:&quot;test&quot;,&quot;pass&quot;:&quot;test&quot;}
+```javascript
+{"name":"test","pass":"test"}
+```
 
 ## Авторизация
 
-/userAuth?data=&lt;шиврованный json&gt;
+```javascript
+/userAuth?data=<шиврованный json>
+```
 
+```javascript
 {
-
-&quot;name&quot;: &lt;string&gt;,
-
-&quot;pass&quot;: &lt;string&gt;
-
+	"name": <string>,
+	"pass": <string>
 }
+```
 
 **Ответ**** :**
 
+```javascript
 {
-
-&quot;sid&quot;: &lt;string uuid4&gt;
-
+	"sid": <string uuid4>
 }
+```
 
 **Пример**** :**
 
 _Запрос__:_
 
+```javascript
 /userAuth?data=TCLCgsK7CsOpw4kMHcOuwpEiwo7Cq8KewoHDhFQmBGPCg8KzOsK2fcOjwooE
+```
 
 Ответ:
 
+```javascript
 TCLCn8KzA8Kuw5EWHcKswpBmwpnCusOQwpXDlxhjRCTCjcK8esOiOcKgwoVAC8KTNwjCn2QXHktSZsK8ScOuwrPDt8Kvw4s=
+```
 
 ## Данные пользователя
 
-/userData?data=&lt;шиврованный json&gt;
+```javascript
+/userData?data=<шиврованный json>
+```
 
+```javascript
 {
-
-&quot;sid&quot;: string,
-
+	"sid": string,
 }
 
-**Ответ**** :**
+```
+Ответ** :**
 
+```javascript
 {
-
-&quot;user&quot;: &lt;string&gt;,
-
- &quot;robot&quot;: [
-
-{
-
-&quot;battle\_count&quot;: &lt;int&gt;,
-
- &quot;recid&quot;: &lt;int&gt;,
-
- &quot;attribs&quot;: &lt;long string&gt;,
-
-&quot;sell\_flag&quot;: &lt;0 or 1&gt;,
-
- &quot;user\_recid&quot;: &lt;int&gt;,
-
-&quot;robot\_status\_recid&quot;: &lt;int&gt;,
-
-&quot;name&quot;: &lt;string&gt;,
-
-&quot;rank&quot;: &lt;float&gt;
-
-&quot;win\_count&quot;: &lt;int&gt;,
-
-&quot;model&quot;: &lt;long string&gt;,
-
+"user": <string>,
+"robot": [
+	{
+		"battle_count": <int>,
+		"recid": <int>,
+		"attribs": <long string>,
+		"sell_flag": <0 or 1>,
+		"user_recid": <int>,
+		"robot_status_recid": <int>,
+		"name": <string>,
+		"rank": <float>
+		"win_count": <int>,
+		"model": <long string>,
+	}]
 }
-
-]
-
-}
+```
 
 **Пример**** :**
 
 _Запрос__:_
 
+```javascript
 /userData?data=TCLCn8KzA8Kuw5EWHcKpw41kw4LCvsOWwpHDkRhlQ3DDm8K8esKxNsKhwoVBCMOCbwjCmmURQB4APcK6ScOiwrzDsMKvw4s%3D
+```
 
 Ответ:
 
+```javascript
 TCLCmcKpAsO%2Bw4kMH8K4wpowwpfDrMKQwo%2FClBcnGCPDlsOlbMOpLsOMw5NbWMOFelHClTV8GxVEa8O7WsOgwqXDscKhwpZua0tqwqrDrn7CmGw8f09rFQzDocOSw4d4w4VyXQkGfsKZEEPDs8KCw6A0FwlTXh9ZL8OdwrLCnMKSaXA4w4TCk8KGFHfDscOQSWLDqWbDsDLCmsO1Mikrwq1ywrzCvsK5wpYFwoguwq1GZlh3CMKjSzA%2Fw74LaV5FwoLDpF3DrMOBdcKPw5g4wpsxcsOKwrwWZsOQwpnChzYRwpFhBRJMwpjDlRXDrjgTw6fColdhHmPDvl3DlRrClcOOKkcGVARPwoTDkxTCgMOrBG9GwqUpwqrCncKAw7PDsg%3D%3D
+```
 
 
 
